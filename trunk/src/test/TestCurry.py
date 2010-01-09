@@ -2,12 +2,12 @@ from __future__ import with_statement
 
 import os
 import sys
-import threadpool
+
 import unittest
 import logging
 import pickle
 
-sys.path.insert(0,"../")
+sys.path.insert(0, os.getenv('CURRYPY_HOME'))
 
 import currypy as CurryModule
 
