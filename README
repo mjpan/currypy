@@ -9,5 +9,5 @@ Once installed (see INSTALL for instructions), your Python application can use c
 First, import the module:
         import currypy
 
-Usage is the same as the functools.partial API.  See src/test/TestCurry for examples of usage
+Usage is the same as the currypy.Curry API.  See src/test/TestCurry for examples of usage
 
