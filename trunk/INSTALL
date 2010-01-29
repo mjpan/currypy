@@ -1,2 +1,3 @@
-* Ensure that the currypy package is in your Python search path
-* Upcoming: automated installation of this package
+To install:
+* python setup.py build
+* python setup.py install
