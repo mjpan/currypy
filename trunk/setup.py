@@ -5,5 +5,6 @@ setup(
     version='0.1',
     packages=find_packages(
         'src',exclude=["*.test", "*.test.*", "test.*", "test"]),
-    package_dir={'':'src'}
+    package_dir={'':'src'},
+    test_suite="test",
 )
