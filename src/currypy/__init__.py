@@ -1,5 +1,8 @@
 import functools
 
+import pickle
+
+
 class Curry(object):
 
     def __init__(self, function, *args, **kwds):
@@ -17,7 +20,8 @@ class Curry(object):
 
     def __getstate__(self):
         odict = self.__dict__.copy()
-        odict['function'] = self._partial.func
+        
+        odict['function'] = pickle.dumps(self._partial.func)
         odict['args'] = self._partial.args
         odict['keywords'] = self._partial.keywords
         del odict['_partial']
@@ -25,7 +29,8 @@ class Curry(object):
 
 
     def __setstate__(self, dict):
-        function = dict['function']
+
+        function = pickle.loads(dict['function'])
         args = dict['args']
         keywords = dict['keywords']
 

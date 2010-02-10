@@ -5,9 +5,12 @@ import sys
 
 import unittest
 import logging
+
 import pickle
 
-sys.path.insert(0, os.getenv('CURRYPY_HOME'))
+import jsonpickle
+import jsonpickle.pickler
+import jsonpickle.unpickler
 
 import currypy as CurryModule
 
@@ -15,7 +18,7 @@ def foo(a, b=3):
     return a*b 
 
 
-class TestCase(unittest.TestCase):
+class TestPickle(unittest.TestCase):
     """
     """
 
@@ -89,6 +92,64 @@ class TestCase(unittest.TestCase):
     # END class TestPickle
     pass
 
+
+class TestJsonPickle(unittest.TestCase):
+    """
+    """
+
+    def setUp(self):
+
+        self._path = '/tmp/TestCurry'
+        return
+    
+    def tearDown(self):
+        if os.path.exists(self._path):
+            os.unlink(self._path)
+        
+        return
+    
+    
+    def testJsonPickle1(self):
+
+        pickler = jsonpickle.Pickler()
+
+        curriedObj = CurryModule.Curry(foo, 2, b=5)
+
+        jsonVal = pickler.flatten(curriedObj)
+
+        unpickler = jsonpickle.unpickler.Unpickler()
+        newCurriedObj = unpickler.restore(jsonVal)
+
+        self.assertEquals(10, newCurriedObj())
+
+        return
+
+    def testJsonPickle2(self):
+
+        pickler = jsonpickle.Pickler()
+
+        curriedObj = CurryModule.Curry(foo, 2, b=5)
+
+        jsonVal = pickler.flatten(curriedObj)
+        dumped = False
+        with open(self._path, 'w') as f:
+            pickle.dump(jsonVal, f)
+            dumped = True
+            pass
+
+        loaded = False
+        with open(self._path, 'r') as f:
+            v = pickle.load(f)
+            unpickler = jsonpickle.unpickler.Unpickler()
+            newCurriedObj = unpickler.restore(v)
+            loaded = True
+
+        self.assertEquals(10, newCurriedObj())
+
+        return
+
+    # END class JsonPickle
+    pass
 
 def main():
 
