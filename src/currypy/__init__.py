@@ -5,6 +5,10 @@ import pickle
 
 class Curry(object):
 
+    @staticmethod
+    def curryFromPartialObject(partial):
+        return Curry(partial.func, *partial.args, **partial.keywords)
+
     def __init__(self, function, *args, **kwds):
         self.initPartialObject(function, *args, **kwds)
         return
