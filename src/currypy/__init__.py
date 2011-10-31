@@ -7,7 +7,9 @@ class Curry(object):
 
     @staticmethod
     def curryFromPartialObject(partial):
-        return Curry(partial.func, *partial.args, **partial.keywords)
+        args = partial.args or ()
+        kwds = partial.keywords or {}
+        return Curry(partial.func, *args, **kwds)
 
     def __init__(self, function, *args, **kwds):
         self.initPartialObject(function, *args, **kwds)
