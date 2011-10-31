@@ -50,6 +50,18 @@ class TestPickle(unittest.TestCase):
         self.assertEquals(curriedPartial.keywords, partial.keywords)
         return
 
+
+    def testEquals(self):
+
+        partial = functools.partial(foo, 2, b=5)
+        curryObj1 = CurryModule.Curry.curryFromPartialObject(partial)
+        curryObj2 = CurryModule.Curry.curryFromPartialObject(partial)
+        
+        self.assertFalse(curryObj1._partial is curryObj2._partial)
+        self.assertEquals(curryObj1, curryObj2)
+        
+        return
+
     
     def testPickle1(self):
 

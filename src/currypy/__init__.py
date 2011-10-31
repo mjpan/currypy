@@ -13,6 +13,24 @@ class Curry(object):
         self.initPartialObject(function, *args, **kwds)
         return
 
+    def __eq__(self, other):
+        if self is other:
+            return True
+
+        if not isinstance(other, self.__class__):
+            return False
+
+        selfPartial = self._partial
+        otherPartial = other._partial
+        if selfPartial.func is not otherPartial.func:
+            return False
+        if not selfPartial.args == otherPartial.args:
+            return False
+        if not selfPartial.keywords == otherPartial.keywords:
+            return False
+        return True
+
+
     def __call__(self, *args, **kwds):
         return self._partial(*args, **kwds)
 
