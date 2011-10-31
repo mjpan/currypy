@@ -3,6 +3,7 @@ from __future__ import with_statement
 import os
 import sys
 
+import functools
 import unittest
 import logging
 
@@ -36,6 +37,19 @@ class TestPickle(unittest.TestCase):
         
         return
     
+
+    def testCurryFromPartialObject(self):
+
+        partial = functools.partial(foo, 2, b=5)
+
+        curriedObj = CurryModule.Curry.curryFromPartialObject(partial)
+        curriedPartial = curriedObj._partial
+
+        self.assertEquals(curriedPartial.func, partial.func)
+        self.assertEquals(curriedPartial.args, partial.args)
+        self.assertEquals(curriedPartial.keywords, partial.keywords)
+        return
+
     
     def testPickle1(self):
 
