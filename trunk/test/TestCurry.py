@@ -7,6 +7,8 @@ import unittest
 import logging
 
 import pickle
+import shutil
+import tempfile
 
 import jsonpickle
 import jsonpickle.pickler
@@ -24,11 +26,13 @@ class TestPickle(unittest.TestCase):
 
     def setUp(self):
 
-        self._path = '/tmp/TestCurry'
+        self.rootDir = tempfile.mkdtemp()
+        self._path = os.path.join(self.rootDir, 'foo')
         return
     
     def tearDown(self):
-        os.unlink(self._path)
+        if os.path.exists(self.rootDir):
+            shutil.rmtree(self.rootDir)
         
         return
     
@@ -99,15 +103,16 @@ class TestJsonPickle(unittest.TestCase):
 
     def setUp(self):
 
-        self._path = '/tmp/TestCurry'
+        self.rootDir = tempfile.mkdtemp()
+        self._path = os.path.join(self.rootDir, 'foo')
         return
     
     def tearDown(self):
-        if os.path.exists(self._path):
-            os.unlink(self._path)
+        if os.path.exists(self.rootDir):
+            shutil.rmtree(self.rootDir)
         
         return
-    
+
     
     def testJsonPickle1(self):
 
